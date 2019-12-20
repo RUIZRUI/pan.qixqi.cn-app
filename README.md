@@ -17,3 +17,30 @@
 5.  使用 java.util.UUID 产生随机数充当id
 6.  服务端的Connection不能作为类内属性，如果上锁，说明就一个连接，太慢了。
 7. 上传的文件没有后缀时异常。
+
+
+
+
+
+## 提交远程仓库
+
+### …or create a new repository on the command line
+
+```bash
+echo "# pan.qixqi.club" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/QIXQI/pan.qixqi.club.git
+git push -u origin master
+```
+
+
+
+### …or push an existing repository from the command line
+
+```bash
+git remote add origin https://github.com/QIXQI/pan.qixqi.club.git
+git push -u origin master
+```
+
