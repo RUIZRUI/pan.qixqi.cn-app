@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -171,23 +172,38 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case R.id.upload_new_folder:
             case R.id.upload_new_folder_text:
                 // Toast.makeText(this, "新建文件夹", Toast.LENGTH_SHORT).show();
-                final EditText inputFolderName = new EditText(FileUploadActivity.this);
-                AlertDialog.Builder dialog = new AlertDialog.Builder(FileUploadActivity.this);
-                dialog.setTitle("新建文件夹");
-                dialog.setView(inputFolderName);
-                dialog.setPositiveButton("创建", new DialogInterface.OnClickListener() {
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(FileUploadActivity.this);
+                View viewCreateFolder =  getLayoutInflater().inflate(R.layout.view_dialog_create_folder, null, false);
+                final EditText inputFolderName = (EditText) viewCreateFolder.findViewById(R.id.input_folder_name);
+                dialog.setView(viewCreateFolder);
+                dialog.setCancelable(true);
+                final AlertDialog alert = dialog.create();
+                // 取消按钮
+                viewCreateFolder.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(FileUploadActivity.this, inputFolderName.getText().toString(), Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        alert.dismiss();
                     }
                 });
-                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                // 创建按钮
+                viewCreateFolder.findViewById(R.id.create).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    public void onClick(View v) {
+                        // Toast.makeText(FileUploadActivity.this, inputFolderName.getText().toString(), Toast.LENGTH_SHORT).show();
+                        String folderName = inputFolderName.getText().toString().trim();
+                        if(!"".equals(folderName)){
+                            createNewFolder(alert, folderName);
+                        }
+                        alert.dismiss();
                     }
                 });
-                dialog.show();
+                alert.show();
+                // 设置窗体大小
+                alert.getWindow().setLayout(900, 600);
+                // WindowManager.LayoutParams params = alert.getWindow().getAttributes();
+                // params.width = 200;
+                // params.height = 200;
+                // alert.getWindow().setAttributes(params);
                 break;
             case R.id.upload_other:
             case R.id.upload_other_text:
@@ -225,9 +241,10 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
      * 发起网络请求，创建文件夹
      * @param folderName
      */
-    private void createNewFolder(String folderName){
-        String address = "https://www.ourvultr.club:8443/qq/FileUpload";
+    private void createNewFolder(final AlertDialog alert, String folderName){
+        String address = "https://www.ourvultr.club:8443/qq/Folders";
         RequestBody requestBody = new FormBody.Builder()
+                .add("method", "create")
                 .add("userId", Integer.toString(selfUser.getUserId()))
                 .add("parent", Integer.toString(fileLink.getLinkId()))
                 .add("folderName", folderName)
@@ -236,12 +253,14 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 showResponse(e.getMessage());
+                alert.dismiss();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String responseMsg = response.body().string();
                 showResponse(responseMsg);
+                alert.dismiss();
             }
         });
 
