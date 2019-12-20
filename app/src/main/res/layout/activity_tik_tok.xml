@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/slateblue"
+    tools:context=".TikTok">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:background="@null"
+            android:text="取消" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号注册登录有助于您快速找到好友"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="16dp"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/tiktok_phone"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="4"
+                android:layout_gravity="left|center_vertical"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:maxLines="1"
+                android:textSize="25dp"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textCursorDrawable="@drawable/tiktok_cursor"
+                android:inputType="number"
+                android:maxLength="11"
+                android:background="@null"
+                android:textColorHint="@color/placeholder"
+                android:hint="输入手机号码" />
+
+
+            <ImageView
+                android:id="@+id/tiktok_login"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+                android:src="@drawable/tiktok_login" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他登录方式"
+            android:textSize="14dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <ImageView
+                android:id="@+id/qq_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/qq" />
+
+            <ImageView
+                android:id="@+id/wechat_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/weixin" />
+
+            <ImageView
+                android:id="@+id/weibo_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:src="@drawable/weibo" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

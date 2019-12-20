@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/qq_login"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/qq_login" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:background="@color/paleturquoise"
+            android:textCursorDrawable="@drawable/my_cursor"
+            android:inputType="number"
+            style="@style/myEditTextStyle"
+            android:hint="请输入账号："/>
+
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:background="@color/paleturquoise"
+            android:textCursorDrawable="@drawable/my_cursor"
+            style="@style/myEditTextStyle"
+            android:inputType="textPassword"
+            android:hint="请输入密码：" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/lightskyblue"
+                android:text="登录" />
+
+            <Button
+                android:id="@+id/finish"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/lightskyblue"
+                android:text="退出" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/non"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="无法登录？"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/tiktok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="跳转到抖音"
+                android:layout_weight="1"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新用户"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="20dp"
+                android:textSize="16dp"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

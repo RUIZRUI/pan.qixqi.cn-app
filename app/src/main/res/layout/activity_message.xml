@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MessageActivity">
+
+    <!-- 滑动菜单 -->
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 第一个子控件 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 顶部标题栏 -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            <!-- 消息列表 -->
+            <!-- 下拉刷新 -->
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <!-- <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="接连几夜熬到半夜，今天想要早早的入睡也是奢望，不知怎么滴，就想到了她，感到内心无限的压力与无奈，不知从什么时候起，自己丢失了真诚、自信， 对自己内心的真诚，渐渐的感觉自己染上了一些肮脏的东西，可不是每个人心中都多多少少会有些肮脏的东西吗？现实与美好总是大相径庭的，从小到大，自己收到的 庇佑太多了，长大了回头看，有些无奈，很多东西，自己今天都要去买单了，很多东西，很难再找回来了，慢慢的，感觉自己进入了死胡同。性格是难以塑造的， 想着去改变，去发现还在原点，不知什么时候起，照镜子时自己喜欢去观察眼睛，想要从空洞的眼睛中去观察自己，每次看到的都是失去的光芒，生活本该就是 平静的，可不知总是在期待着什么，有时候，很多记忆一闪而过，分不清虚幻还是现实，偶尔，也会抬头，想象宇宙的画面，忘掉烦恼，可人的一生似乎又不足以 丈量宇宙，想回到那个每天为竞争乐此不疲的时光，但也不是自己一步步退却，讨厌成王败寇的日子吗？高中时，无数次幻想在一个没有熟人的小城市，路灯 散发出淡黄色的光，自己坐在空旷的公交车上，看挡风玻璃的倒影，感觉那样会是多么的温馨啊！高中时，自己很喜欢和她对视，也许她在看自己身后的天空吧， 彷佛从她的眼中能够看到自己的内心，知道想要什么吧，也会不时的偷看她，那样就可以心安吧，那时，很喜欢展示自己，但每次在黑板讲完题，都喜欢打量 别人的目光，有次成绩下来后，发现她在偷偷擦眼泪，自己应该感到难过，但不知怎么的，就是感到很开心，高考迷迷糊糊的过去了，从此，就没见过了，记忆中 的她喜欢穿黄色外套，也很喜欢笑，好像到现在也没有说过一句话。不知什么时候，很难受别人感觉自己很好，亲近自己，因为好感往往随着距离的接近而消失。 自己想要活得精致，但往往粗糙，自己想要活得想小川，但生活往往像高要，不管怎么说，一定要幸福啊！
+        接连几夜熬到半夜，今天想要早早的入睡也是奢望，不知怎么滴，就想到了她，感到内心无限的压力与无奈，不知从什么时候起，自己丢失了真诚、自信， 对自己内心的真诚，渐渐的感觉自己染上了一些肮脏的东西，可不是每个人心中都多多少少会有些肮脏的东西吗？现实与美好总是大相径庭的，从小到大，自己收到的 庇佑太多了，长大了回头看，有些无奈，很多东西，自己今天都要去买单了，很多东西，很难再找回来了，慢慢的，感觉自己进入了死胡同。性格是难以塑造的， 想着去改变，去发现还在原点，不知什么时候起，照镜子时自己喜欢去观察眼睛，想要从空洞的眼睛中去观察自己，每次看到的都是失去的光芒，生活本该就是 平静的，可不知总是在期待着什么，有时候，很多记忆一闪而过，分不清虚幻还是现实，偶尔，也会抬头，想象宇宙的画面，忘掉烦恼，可人的一生似乎又不足以 丈量宇宙，想回到那个每天为竞争乐此不疲的时光，但也不是自己一步步退却，讨厌成王败寇的日子吗？高中时，无数次幻想在一个没有熟人的小城市，路灯 散发出淡黄色的光，自己坐在空旷的公交车上，看挡风玻璃的倒影，感觉那样会是多么的温馨啊！高中时，自己很喜欢和她对视，也许她在看自己身后的天空吧， 彷佛从她的眼中能够看到自己的内心，知道想要什么吧，也会不时的偷看她，那样就可以心安吧，那时，很喜欢展示自己，但每次在黑板讲完题，都喜欢打量 别人的目光，有次成绩下来后，发现她在偷偷擦眼泪，自己应该感到难过，但不知怎么的，就是感到很开心，高考迷迷糊糊的过去了，从此，就没见过了，记忆中 的她喜欢穿黄色外套，也很喜欢笑，好像到现在也没有说过一句话。不知什么时候，很难受别人感觉自己很好，亲近自己，因为好感往往随着距离的接近而消失。 自己想要活得精致，但往往粗糙，自己想要活得想小川，但生活往往像高要，不管怎么说，一定要幸福啊！
+        接连几夜熬到半夜，今天想要早早的入睡也是奢望，不知怎么滴，就想到了她，感到内心无限的压力与无奈，不知从什么时候起，自己丢失了真诚、自信， 对自己内心的真诚，渐渐的感觉自己染上了一些肮脏的东西，可不是每个人心中都多多少少会有些肮脏的东西吗？现实与美好总是大相径庭的，从小到大，自己收到的 庇佑太多了，长大了回头看，有些无奈，很多东西，自己今天都要去买单了，很多东西，很难再找回来了，慢慢的，感觉自己进入了死胡同。性格是难以塑造的， 想着去改变，去发现还在原点，不知什么时候起，照镜子时自己喜欢去观察眼睛，想要从空洞的眼睛中去观察自己，每次看到的都是失去的光芒，生活本该就是 平静的，可不知总是在期待着什么，有时候，很多记忆一闪而过，分不清虚幻还是现实，偶尔，也会抬头，想象宇宙的画面，忘掉烦恼，可人的一生似乎又不足以 丈量宇宙，想回到那个每天为竞争乐此不疲的时光，但也不是自己一步步退却，讨厌成王败寇的日子吗？高中时，无数次幻想在一个没有熟人的小城市，路灯 散发出淡黄色的光，自己坐在空旷的公交车上，看挡风玻璃的倒影，感觉那样会是多么的温馨啊！高中时，自己很喜欢和她对视，也许她在看自己身后的天空吧， 彷佛从她的眼中能够看到自己的内心，知道想要什么吧，也会不时的偷看她，那样就可以心安吧，那时，很喜欢展示自己，但每次在黑板讲完题，都喜欢打量 别人的目光，有次成绩下来后，发现她在偷偷擦眼泪，自己应该感到难过，但不知怎么的，就是感到很开心，高考迷迷糊糊的过去了，从此，就没见过了，记忆中 的她喜欢穿黄色外套，也很喜欢笑，好像到现在也没有说过一句话。不知什么时候，很难受别人感觉自己很好，亲近自己，因为好感往往随着距离的接近而消失。 自己想要活得精致，但往往粗糙，自己想要活得想小川，但生活往往像高要，不管怎么说，一定要幸福啊！" />
+                </ScrollView> -->
+
+
+                <!-- 会话列表 -->
+                <ListView
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bnav_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:itemBackground="@color/white"
+                app:itemIconTint="@drawable/main_bottom"
+                app:itemTextColor="@drawable/main_bottom"
+                app:menu="@menu/bottom_navigation_view"
+                app:labelVisibilityMode="labeled" />    <!-- 动画效果开启 -->
+
+
+        </LinearLayout>
+
+
+        <!-- 第二个子控件 -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/nav_menu"
+            app:headerLayout="@layout/nav_header" />
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+
+    <!-- 底部菜单栏 -->
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bnav_menu"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:itemBackground="@color/white"-->
+<!--            app:itemIconTint="@drawable/main_bottom"-->
+<!--            app:itemTextColor="@drawable/main_bottom"-->
+<!--            app:menu="@menu/bottom_navigation_view"-->
+<!--            app:labelVisibilityMode="labeled" />    &lt;!&ndash; 动画效果开启 &ndash;&gt;-->
+<!--    </RelativeLayout>-->
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

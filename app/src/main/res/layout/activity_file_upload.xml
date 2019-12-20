@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wechat_bg"
+    tools:context=".FileUploadActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 顶部标题栏 -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <!-- 占位 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="快来上传吧！" />
+
+        <!-- 占位 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- 第一排 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_picture"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/upload_picture" />
+
+                <TextView
+                    android:id="@+id/upload_picture_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_picture"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="上传图片" />
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_video"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/upload_video" />
+
+                <TextView
+                    android:id="@+id/upload_video_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_video"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="上传视频" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_document"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/upload_document" />
+
+                <TextView
+                    android:id="@+id/upload_document_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_document"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="上传文档" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <!-- 第二排 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_audio"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/upload_audio" />
+
+                <TextView
+                    android:id="@+id/upload_audio_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_audio"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="上传音乐" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_new_folder"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/upload_new_folder" />
+
+                <TextView
+                    android:id="@+id/upload_new_folder_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_new_folder"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="新建文件夹" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/upload_other"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/upload_other" />
+
+                <TextView
+                    android:id="@+id/upload_other_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upload_other"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="上传其他" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <!-- 占位 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

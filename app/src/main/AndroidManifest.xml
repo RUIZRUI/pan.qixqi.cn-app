@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="club.qixqi.uiqq">
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 访问存储权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 前台服务权限 -->
+
+    <application
+        android:name=".context.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".FileDownloadActivity"></activity>
+
+        <service
+            android:name=".services.DownloadService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".FileUploadActivity" />
+        <activity android:name=".login" />
+        <activity android:name=".SessionActivity" />
+        <activity android:name=".AddFriendActivity" />
+        <activity android:name=".FriendMoreMessageActivity" />
+        <activity android:name=".FriendHomeActivity" />
+        <activity android:name=".FriendsActivity" />
+        <activity android:name=".register" />
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".TikTok" />
+        <activity android:name=".FileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".success" />
+        <activity android:name=".Search" />
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>

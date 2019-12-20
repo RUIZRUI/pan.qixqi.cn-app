@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="@dimen/space_line2"-->
+<!--        android:layout_marginRight="50dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:paddingLeft="15dp">-->
+
+<!--        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--            android:id="@+id/user_icon"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/qixqi" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/user_message"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/space_line"-->
+<!--            android:background="@drawable/ic_chat_left"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:padding="@dimen/space_line2"-->
+<!--            android:textSize="@dimen/sp_stander"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:text="test"/>-->
+
+<!--    </LinearLayout>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_line2">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/qixqi" />
+
+        <TextView
+            android:id="@+id/user_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_line"
+            android:background="@drawable/ic_chat_left"
+            android:gravity="center_vertical"
+            android:padding="@dimen/space_line2"
+            android:textSize="@dimen/sp_stander"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/user_icon"
+            android:text="test"/>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

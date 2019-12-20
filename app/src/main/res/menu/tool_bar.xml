@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/nav_search"
+        android:title="搜索"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_camera"
+        android:icon="@drawable/nav_camera"
+        android:title="打开摄像头"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/nav_more"
+        android:title="更多功能"
+        app:showAsAction="always" />
+
+</menu>

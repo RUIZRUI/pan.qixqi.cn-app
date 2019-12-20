@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- <item name="colorPrimary">@color/colorPrimary</item> -->
+        <item name="colorPrimary">@color/playstore_green</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 改变水滴的颜色 -->
+        <item name="colorControlActivated">@color/lightskyblue</item><!-- 亮天蓝色 -->
+    </style>
+
+
+    <!-- 修改 EditText 样式 -->
+    <style name="myEditTextStyle" parent="Widget.AppCompat.EditText">
+        <!-- 背景色 -->
+        <item name="android:background">@color/paleturquoise</item><!--苍宝石绿 -->
+        <!-- 选中文字的背景色 -->
+        <item name="android:textColorHighlight">@color/lightskyblue</item><!-- 亮天蓝色 -->
+        <!-- 垂直指示器资源文件，插入的是文件 -->
+        <!-- <item name="android:textSelectHandle"></item> -->
+        <!-- 左边指示器资源文件，插入的是文件 -->
+        <!-- <item name="android:textSelectHandleLeft"></item> -->
+        <!-- 右边指示器资源文件，插入的是文件 -->
+        <!-- <item name="android:textSelectHandleRight"></item> -->
+    </style>
+
+
+    <!-- ToolBar -->
+    <style name="ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+</resources>

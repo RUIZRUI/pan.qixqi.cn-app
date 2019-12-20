@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wechat_bg"
+    tools:context=".SessionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:visibility="visible"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+            <!-- 好恶心的问题，ListView外部应该是垂直排列，而SwipeRefreshLayout貌似也不是水平排列啊，恶心 -->
+
+            <!-- 注释掉之后想哭，难道是 bean/Message 和 uiqq/Message 搞的基 ??? -->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical">-->
+
+                <!-- 自定义消息列表 -->
+                <ListView
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stackFromBottom="true"
+                    android:transcriptMode="alwaysScroll"
+                    android:divider="@null"/>
+<!--            </LinearLayout>-->
+
+
+
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bnav_menu"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:itemBackground="@color/wechat_bg"-->
+<!--            app:itemIconTint="@drawable/main_bottom"-->
+<!--            app:itemTextColor="@drawable/main_bottom"-->
+<!--            app:menu="@menu/bottom_navigation_view"-->
+<!--            app:labelVisibilityMode="labeled">-->
+
+<!--        </com.google.android.material.bottomnavigation.BottomNavigationView>-->
+
+        <!-- 自定义底部菜单栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/session_bottom_space"
+            android:background="@color/wechat_bg"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/input_message"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:background="@drawable/edit_text_shape"/>
+
+                <Button
+                    android:id="@+id/send_message"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/button_shape"
+                    android:textColor="@color/white"
+                    android:text="发送"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/session_audio"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bnav_audio" />
+
+
+                <ImageView
+                    android:id="@+id/session_picture"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bnav_picture" />
+
+                <ImageView
+                    android:id="@+id/session_camera"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bnav_camera" />
+
+                <ImageView
+                    android:id="@+id/session_face"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bnav_face" />
+
+                <ImageView
+                    android:id="@+id/session_more_opt"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bnav_more" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
