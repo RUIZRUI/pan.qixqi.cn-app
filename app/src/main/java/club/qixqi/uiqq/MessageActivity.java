@@ -1,6 +1,7 @@
 package club.qixqi.uiqq;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,10 +88,12 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
 
 
     private void initSessions(){
-        for(int i=0; i<10; i++){
-            Sessions sessions = new Sessions(1,1,1,1, "常远：好久不见", "常远", "下午5:30", 'w', 'r');
+        /* for(int i=0; i<10; i++){
+            Sessions sessions = new Sessions(1,1,1,1, "cy：好久不见", "cy", "下午5:30", 'w', 'r');
             sessionsList.add(sessions);
-        }
+        }*/
+        swipeRefresh.setRefreshing(true);
+        refreshSessions();
     }
 
 
@@ -107,7 +111,20 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
         bundle.putSerializable("sessions", sessions);
         Intent sessionIntent = new Intent(MessageActivity.this, SessionActivity.class);
         sessionIntent.putExtras(bundle);
-        startActivity(sessionIntent);
+        startActivityForResult(sessionIntent, 1);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                // Toast.makeText(MessageActivity.this, "hello, Message", Toast.LENGTH_SHORT).show();
+                initSessions();
+                break;
+            default:
+        }
     }
 
     /**
@@ -179,7 +196,9 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
                 Toast.makeText(this, "您想打电话吗？", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_friends:
-                Toast.makeText(this, "您想找朋友聊天吗？", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "您想找朋友聊天吗？", Toast.LENGTH_SHORT).show();
+                Intent friendsIntent2 = new Intent(MessageActivity.this, FriendsActivity.class);
+                startActivity(friendsIntent2);
                 break;
             case R.id.nav_location:
                 Toast.makeText(this, "您想尝试位置服务吗？", Toast.LENGTH_SHORT).show();
@@ -213,13 +232,17 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         showResponse(e.getMessage(), false);
-                        swipeRefresh.setRefreshing(false);
+                        if(swipeRefresh.isRefreshing()) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                     }
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         showResponse(response.body().string(), true);
-                        swipeRefresh.setRefreshing(false);
+                        if(swipeRefresh.isRefreshing()) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                     }
                 });
             }
@@ -239,8 +262,9 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
                         List<Sessions> list = JSON.parseArray(reponse, Sessions.class);
                         for(Sessions sessions : list){
                             sessionsList.add(sessions);
+                            Log.d("qixqi.club", sessions.toString());
                         }
-                        Toast.makeText(MessageActivity.this, reponse, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MessageActivity.this, reponse, Toast.LENGTH_SHORT).show();
                     }
                     adapter.notifyDataSetChanged();
                 }else{

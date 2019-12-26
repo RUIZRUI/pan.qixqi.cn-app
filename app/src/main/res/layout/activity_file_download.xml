@@ -7,7 +7,7 @@
     tools:context=".FileDownloadActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -17,21 +17,177 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="@dimen/title_height"
+            android:layout_alignParentTop="true"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:lines="1"
+                android:textColor="@color/white"
+                android:ellipsize="end"
+                android:textSize="16dp"
+                android:text="文件传输列表" />
+
+        </androidx.appcompat.widget.Toolbar>
 
 
-        <Button
-            android:id="@+id/test"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/toolbar_choose"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/toolbar"
+            android:background="?attr/colorPrimary">
+
+            <TextView
+                android:id="@+id/download_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="下载列表"/>
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/upload_view"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="上传列表"/>
+
+        </LinearLayout>
+
+
+        <!-- 下载中 -->
+        <LinearLayout
+            android:id="@+id/layout_file_downloading"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="test" />
+            android:layout_below="@id/toolbar_choose"
+            android:visibility="visible"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/file_downloading_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="left|center_vertical"
+                android:text="正在下载"/>
+
+
+            <ListView
+                android:id="@+id/downloading_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/file_divider" />
+
+        </LinearLayout>
+
+
+        <!-- 下载完成 -->
+        <LinearLayout
+            android:id="@+id/layout_file_downloaded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_file_downloading"
+            android:visibility="visible"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/file_downloaded_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="left|center_vertical"
+                android:text="下载完成" />
+
+            <ListView
+                android:id="@+id/downloaded_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/file_divider" />
+
+        </LinearLayout>
 
 
 
-    </LinearLayout>
+
+        <!-- 上传中 -->
+        <!-- <LinearLayout
+            android:id="@+id/layout_file_uploading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_choose"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/file_uploading_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="left|center_vertical"
+                android:text="正在上传"/>
+
+
+            <ListView
+                android:id="@+id/uploading_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/file_divider" />
+
+        </LinearLayout>-->
+
+
+        <!-- 上传完成 -->
+        <LinearLayout
+            android:id="@+id/layout_file_uploaded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_choose"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/file_uploaded_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="left|center_vertical"
+                android:text="上传完成" />
+
+            <ListView
+                android:id="@+id/uploaded_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/file_divider" />
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

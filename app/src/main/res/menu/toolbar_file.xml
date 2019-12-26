@@ -17,9 +17,14 @@
 
 
     <item
+        android:id="@+id/user_share"
+        android:title="分享链接"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/file_sort"
         android:icon="@drawable/nav_friend_setting"
-        android:title="排序"
+        android:title="扩展"
         app:showAsAction="ifRoom" />
 
 

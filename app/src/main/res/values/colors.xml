@@ -166,6 +166,7 @@
     <color name="qq_blue">#00CAFC</color>
     <color name="baidu_listview_grey">#EEEEEE</color>
     <color name="baidu_dialog_editview">#F9F9F9</color>
+    <color name="baidu_search_bg">#F8F8F8</color>
 
 
 </resources>

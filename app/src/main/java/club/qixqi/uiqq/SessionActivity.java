@@ -116,7 +116,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
         changeHomeAsUp(actionBar);
 
         // 消息列表
-        initMessage();
+        // initMessage();
         adapter = new MessageAdapter(SessionActivity.this, messageList, selfUser);
         // Log.e("SessionActivity.java", adapter.toString());
         listView = (ListView) findViewById(R.id.list_view);
@@ -133,24 +133,29 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
      * 初始化消息列表
      */
     private void initMessage(){
-        String time = df.format(new Date());
+        /* String time = df.format(new Date());
         for(int i=0; i<5; i++) {
-            Message message1 = new Message(801935, 801935, "郑翔", "default-icon.png", 207794, 'f', 'w', "嗯嗯嗯", time, 'i');
+            Message message1 = new Message(801935, 801935, "zx", "default-icon.png", 207794, 'f', 'w', "嗯嗯嗯", time, 'i');
             messageList.add(message1);
-            Message message2 = new Message(801935, 207794, "张雪花", "default-icon.png", 801935, 'f', 'w', "嗯嗯", time, 'i');
+            Message message2 = new Message(801935, 207794, "zxh", "default-icon.png", 801935, 'f', 'w', "嗯嗯", time, 'i');
             messageList.add(message2);
-            Message message3 = new Message(801935, 801935, "郑翔", "default-icon.png", 207794, 'f', 'w', "真的吗？", time, 'i');
+            Message message3 = new Message(801935, 801935, "zx", "default-icon.png", 207794, 'f', 'w', "真的吗？", time, 'i');
             messageList.add(message3);
-            Message message4 = new Message(0, 0, "", "", 0, 'f', 's', "在一起", time, 'i');
+            Message message4 = new Message(0, 0, "", "", 0, 'f', 's', "啦啦啦", time, 'i');
             messageList.add(message4);
-            Message message5 = new Message(801935, 207794, "张雪花", "default-icon.png", 801935, 'f', 'w', "是的呢！", time, 'i');
+            Message message5 = new Message(801935, 207794, "zxh", "default-icon.png", 801935, 'f', 'w', "是的呢！", time, 'i');
             messageList.add(message5);
             messageList.add(message4);
-            Message message6 = new Message(801935, 207794, "张雪花", "default-icon.png", 801935, 'f', 'w', "设置后，会改变聊天、菜单和朋友圈的字体大小。如果在使用过程中存在问题或意见，可反馈给微信团队", time, 'i');
+            Message message6 = new Message(801935, 207794, "zxh", "default-icon.png", 801935, 'f', 'w', "设置后，会改变聊天、菜单和朋友圈的字体大小。如果在使用过程中存在问题或意见，可反馈给微信团队", time, 'i');
             messageList.add(message6);
-            Message message7 = new Message(801935, 801935, "郑翔", "default-icon.png", 207794, 'f', 'w', "设置后，会改变聊天、菜单和朋友圈的字体大小。如果在使用过程中存在问题或意见，可反馈给微信团队", time, 'i');
+            Message message7 = new Message(801935, 801935, "zx", "default-icon.png", 207794, 'f', 'w', "设置后，会改变聊天、菜单和朋友圈的字体大小。如果在使用过程中存在问题或意见，可反馈给微信团队", time, 'i');
             messageList.add(message7);
-        }
+        } */
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("method", "searchAll");
+        jsonObject.put("userId1", sessions.getUserId1());
+        jsonObject.put("userId2", sessions.getUserId2());
+        mSocket.send(jsonObject.toString());
     }
 
 
@@ -289,6 +294,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("method", "add");
         jsonObject.put("message", messageJson);
+        Log.d("SessionActivity.java", jsonObject.toJSONString());
         mSocket.send(jsonObject.toString());
     }
 
@@ -299,8 +305,9 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
             public void run() {
                 switch (source){
                     case SEARCHALL:
-                        if("error\n".equals(response) || "empty\n".equals(response)){
-                            Toast.makeText(SessionActivity.this, response, Toast.LENGTH_SHORT).show();
+                        // Log.d("qixqi.club", response);
+                        if("error".equals(response) || "empty".equals(response)){       // 注意这里不是okhttp3响应数据，所以不能加\n
+                            Toast.makeText(SessionActivity.this, "对方可能已经下线了", Toast.LENGTH_SHORT).show();
                         }else{
                             List<Message> list = JSON.parseArray(response, Message.class);
                             messageList.clear();
@@ -405,6 +412,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
         public void onOpen(@NotNull WebSocket webSocket, @NotNull Response response) {
             super.onOpen(webSocket, response);
             mSocket = webSocket;
+            initMessage();
             Log.i("SessionActivity.java", "连接成功！");
         }
     }

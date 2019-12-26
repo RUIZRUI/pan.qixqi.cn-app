@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,14 +30,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import club.qixqi.uiqq.bean.FileLink;
 import club.qixqi.uiqq.bean.User;
+import club.qixqi.uiqq.dao.FileTransferDao;
 import club.qixqi.uiqq.util.HttpUtil;
 import club.qixqi.uiqq.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -47,9 +53,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class FileUploadActivity extends AppCompatActivity implements View.OnClickListener {
-
     private User selfUser;
     private FileLink fileLink;             // 当前目录
+    private boolean isReturn = false;       // 记录返回FileActivity时，是否返回 RESULT_OK
 
     private static final int CHOOSE_PHOTO = 1;
     private static final int CHOOSE_VIDEO = 2;
@@ -57,6 +63,10 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
     private static final int CHOOSE_AUDIO = 4;
     private static final int CHOOSE_OTHER = 5;
     private Toolbar toolbar;
+
+    private FileTransferDao fileTransferDao;
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +81,8 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fileTransferDao = new FileTransferDao(FileUploadActivity.this);
     }
 
 
@@ -154,11 +166,12 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case R.id.upload_document:
             case R.id.upload_document_text:
                 // Toast.makeText(this, "上传文档", Toast.LENGTH_SHORT).show();
-                if(ContextCompat.checkSelfPermission(FileUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                /* if(ContextCompat.checkSelfPermission(FileUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(FileUploadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
                 } else{
                     openDocument();
-                }
+                }*/
+                Toast.makeText(FileUploadActivity.this, "功能扩展中...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.upload_audio:
             case R.id.upload_audio_text:
@@ -193,8 +206,8 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
                         String folderName = inputFolderName.getText().toString().trim();
                         if(!"".equals(folderName)){
                             createNewFolder(alert, folderName);
+                            alert.dismiss();
                         }
-                        alert.dismiss();
                     }
                 });
                 alert.show();
@@ -208,11 +221,12 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case R.id.upload_other:
             case R.id.upload_other_text:
                 // Toast.makeText(this, "上传其他", Toast.LENGTH_SHORT).show();
-                if(ContextCompat.checkSelfPermission(FileUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                /* if(ContextCompat.checkSelfPermission(FileUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(FileUploadActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 5);
                 } else{
                     openOther();
-                }
+                }*/
+                Toast.makeText(FileUploadActivity.this, "功能扩展中...", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
@@ -228,6 +242,10 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_close:
+                if(isReturn){
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                }
                 finish();
                 break;
             default:
@@ -252,14 +270,14 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
         HttpUtil.sendOkHttpRequest(address, requestBody, new okhttp3.Callback(){
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                showResponse(e.getMessage());
+                showResponse(e.getMessage(), true);
                 alert.dismiss();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String responseMsg = response.body().string();
-                showResponse(responseMsg);
+                showResponse(responseMsg, false);
                 alert.dismiss();
             }
         });
@@ -274,6 +292,16 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
      */
     private void uploadFile(String filePath) {
         File file = new File(filePath);
+
+        // 添加正在上传的文件
+        // if(fileTransferDao.isContain(fileLink.getLinkId())){        // 已经包含，更新
+        //     fileTransferDao.editStatus(fileLink.getLinkId(), 1, 'i');
+        // }else{      // 没有包含，添加
+        //    fileLink.setUploadStatus('i');
+        //    fileTransferDao.add(fileLink);
+        // }
+
+
         String address = "https://www.ourvultr.club:8443/qq/FileUpload";
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -284,22 +312,53 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
         HttpUtil.sendOkHttpRequest(address, requestBody, new okhttp3.Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                showResponse(e.getMessage());
+                showResponse(e.getMessage(), true);
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                showResponse(response.body().string());
+                String responseStr = response.body().string();
+
+                // 修改上传状态已完成
+                // fileTransferDao.editStatus(fileLink.getLinkId(), 1, 'h');
+                JSONObject jsonObject = JSON.parseObject(responseStr.trim());
+                if(jsonObject.containsKey("response")){
+                    FileLink uploadFileLink = JSON.parseObject(jsonObject.getString("response"), FileLink.class);
+                    if(fileTransferDao.isContain(uploadFileLink.getLinkId())){      // 更新
+                        fileTransferDao.editStatus(uploadFileLink.getLinkId(), 1, 'h');
+                        fileTransferDao.editFinishTime(uploadFileLink.getLinkId(), 1, df.format(new Date()));
+                    }else{      // 添加
+                        uploadFileLink.setUploadStatus('h');
+                        uploadFileLink.setUploadFinishTime(df.format(new Date()));
+                        fileTransferDao.add(uploadFileLink);
+                    }
+                }
+                showResponse(responseStr, false);
             }
         });
 
     }
 
-    private void showResponse(final String response){
+    /**
+     *
+     * @param response
+     * @param isException  是否异常
+     */
+    private void showResponse(final String response, final boolean isException){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(FileUploadActivity.this, response, Toast.LENGTH_SHORT).show();
+                if(isException){
+                    Toast.makeText(FileUploadActivity.this, response, Toast.LENGTH_SHORT).show();
+                }else{
+                    JSONObject jsonObject = JSON.parseObject(response.trim());
+                    if(jsonObject.containsKey("error")){
+                        Toast.makeText(FileUploadActivity.this, jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                    }else if(jsonObject.containsKey("response")){       // 上传文件或新建文件夹成功
+                        Toast.makeText(FileUploadActivity.this, jsonObject.getString("response"), Toast.LENGTH_SHORT).show();
+                        isReturn = true;
+                    }
+                }
             }
         });
     }
@@ -388,6 +447,11 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case CHOOSE_DOCUMENT:
                 if(resultCode == RESULT_OK){
                     Toast.makeText(this, data.toString(), Toast.LENGTH_SHORT).show();
+                    /* if(Build.VERSION.SDK_INT >= 19){
+                        handleImageOnKitKat(data);
+                    } else{
+                        handleImageBeforeKitKat(data);
+                    }*/
                 }
                 break;
 
@@ -404,6 +468,11 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case CHOOSE_OTHER:
                 if(resultCode == RESULT_OK){
                     Toast.makeText(this, data.toString(), Toast.LENGTH_SHORT).show();
+                    if(Build.VERSION.SDK_INT >= 19){
+                        handleImageOnKitKat(data);
+                    } else{
+                        handleImageBeforeKitKat(data);
+                    }
                 }
                 break;
 
@@ -624,5 +693,16 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
+    /**
+     * 活动后退事件
+     */
+    @Override
+    public void onBackPressed() {
+        if(isReturn){
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+        }
+        super.onBackPressed();
+        // Log.d("FileUploadActivity.java", "你想后退");
+    }
 }

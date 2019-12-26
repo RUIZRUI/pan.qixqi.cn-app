@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bnav_file_download"
+        android:icon="@drawable/bnav_file_download"
+        android:title="下载"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bnav_file_share"
+        android:icon="@drawable/bnav_file_share"
+        android:title="分享"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bnav_file_delete"
+        android:icon="@drawable/bnav_file_delete"
+        android:title="删除"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/bnav_file_rename"
+        android:icon="@drawable/bnav_file_rename"
+        android:title="重命名"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bnav_file_more"
+        android:icon="@drawable/bnav_file_more"
+        android:title="更多"
+        app:showAsAction="always" />
+
+</menu>

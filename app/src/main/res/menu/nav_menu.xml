@@ -26,5 +26,12 @@
             android:id="@+id/nav_task"
             android:icon="@drawable/nav_task"
             android:title="Task" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/nav_logout"
+            android:title="logout" />
+
+
     </group>
 </menu>

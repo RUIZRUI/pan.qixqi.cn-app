@@ -28,6 +28,13 @@ public class SharedPreferenceUtil {
         editor.apply();
     }
 
+    // 删除登录的用户信息
+    public static void deleteLoginUser(Context context){
+        SharedPreferences.Editor editor = context.getSharedPreferences("qq_login_user", Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.commit();
+    }
+
     // 获取登录的用户信息
     public static User getLoginUser(Context context){
         User user = null;
@@ -73,6 +80,14 @@ public class SharedPreferenceUtil {
         editor.putInt("parent", fileLink.getParent());
         editor.putString("createLinkTime", fileLink.getCreateLinkTime());
         editor.apply();
+    }
+
+    // 删除当前登录用户的根文件信息
+    public static void deleteRootFolder(){
+        Context context = MyApplication.getContext();
+        SharedPreferences.Editor editor = context.getSharedPreferences("qq_root_folder", Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.commit();
     }
 
     // 获取当前登录用户的根文件信息

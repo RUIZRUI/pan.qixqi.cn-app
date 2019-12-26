@@ -92,20 +92,22 @@ public class FriendsActivity extends AppCompatActivity implements BottomNavigati
     }
 
     private void initFriends(){
-        String time = df.format(new Date());
+        /* String time = df.format(new Date());
         for(int i=0; i<3; i++){
-            User user1 = new User(100000, "杨玉坤", 'm', "110", time, time, time);
+            User user1 = new User(100000, "yyk", 'm', "110", time, time, time);
             friend_list.add(user1);
-            User user2 = new User(100001, "常远", 'f', "120", time, time, time);
+            User user2 = new User(100001, "cy", 'f', "120", time, time, time);
             friend_list.add(user2);
-            User user3 = new User(100002, "张雪花", 'f', "121", time, time, time);
+            User user3 = new User(100002, "zxh", 'f', "121", time, time, time);
             friend_list.add(user3);
-            User user4 = new User(100003, "徐峥", 'f', "122", time, time, time);
+            User user4 = new User(100003, "xz", 'f', "122", time, time, time);
             friend_list.add(user4);
-            User user5 = new User(100004, "邹逸贤", 'f', "123", time, time, time);
+            User user5 = new User(100004, "zyx", 'f', "123", time, time, time);
             friend_list.add(user5);
-        }
+        }*/
         // refreshFriends();
+        swipeRefresh.setRefreshing(true);
+        refreshFriends();
     }
 
 
@@ -193,7 +195,8 @@ public class FriendsActivity extends AppCompatActivity implements BottomNavigati
                 Toast.makeText(this, "您想打电话吗？", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_friends:
-                Toast.makeText(this, "您想找朋友聊天吗？", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "您想找朋友聊天吗？", Toast.LENGTH_SHORT).show();
+                drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_location:
                 Toast.makeText(this, "您想尝试位置服务吗？", Toast.LENGTH_SHORT).show();
@@ -239,13 +242,17 @@ public class FriendsActivity extends AppCompatActivity implements BottomNavigati
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         showResponse("error" + e.getMessage(), false);
-                        swipeRefresh.setRefreshing(false);
+                        if(swipeRefresh.isRefreshing()) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                     }
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         showResponse(response.body().string(), true);
-                        swipeRefresh.setRefreshing(false);
+                        if(swipeRefresh.isRefreshing()) {
+                            swipeRefresh.setRefreshing(false);
+                        }
                     }
                 });
                 // swipeRefresh.setRefreshing(false);

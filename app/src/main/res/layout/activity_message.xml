@@ -52,7 +52,8 @@
                 <ListView
                     android:id="@+id/list_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:divider="@drawable/friends_divider"/>
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -49,7 +49,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_login);
 
         // 登录跳转到主页面
-        // isLogined();
+        isLogined();
 
         dbHelper = new DatabaseHelper(this, "QixQi.db", null, Integer.parseInt(this.getString(R.string.dbVersion)));
 
@@ -84,8 +84,9 @@ public class login extends AppCompatActivity implements View.OnClickListener {
      */
     private void isLogined(){
         User loginUser = SharedPreferenceUtil.getLoginUser(login.this);
-        if(loginUser != null){
-            Intent successIntent = new Intent(login.this, MessageActivity.class);
+        if(loginUser.getUserId() != -1){
+            Intent successIntent = new Intent(login.this, FileActivity.class);
+            successIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(successIntent);
         }
     }
@@ -208,8 +209,10 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                     Log.d("login1", JSON.toJSONString(rootJson));
                     FileLink fileLink = JSON.toJavaObject(rootJson, FileLink.class);
                     SharedPreferenceUtil.saveRootFolder(fileLink);
+                    Intent intent = new Intent(login.this, FileActivity.class);
+                    startActivity(intent);
                 }else{
-                    Log.e("login1", "为获取到当前登录用户的根文件夹链接");
+                    Log.e("login1", "未获取到当前登录用户的根文件夹链接");
                 }
             }
         });

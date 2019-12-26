@@ -4,7 +4,15 @@
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 访问存储权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 前台服务权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".context.MyApplication"
@@ -14,7 +22,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FileDownloadActivity"></activity>
+        <activity android:name=".LocationActivity"></activity>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="3HIH4twmfUSIEX1xIwIbytEf3BWnDBIa" />
+
+        <activity android:name=".FileUserShareActivity" />
+        <activity android:name=".FileDownloadActivity" />
 
         <service
             android:name=".services.DownloadService"
@@ -41,6 +56,11 @@
         <activity android:name=".success" />
         <activity android:name=".Search" />
         <activity android:name=".MainActivity" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
     </application>
 
 </manifest>

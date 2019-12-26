@@ -2,7 +2,7 @@ package club.qixqi.uiqq.listeners;
 
 public interface DownloadListener {
     void onProgress(int progress);
-    void onSuccess();
+    void onSuccess(int linkId);
     void onFailed();
     void onPaused();
     void onCanceled();

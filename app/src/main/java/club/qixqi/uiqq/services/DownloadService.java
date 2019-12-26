@@ -18,15 +18,40 @@ import androidx.core.app.NotificationCompat;
 
 import club.qixqi.uiqq.FileDownloadActivity;
 import club.qixqi.uiqq.R;
+import club.qixqi.uiqq.adapter.FileLinkAdapter;
+import club.qixqi.uiqq.context.MyApplication;
+import club.qixqi.uiqq.dao.FileTransferDao;
 import club.qixqi.uiqq.listeners.DownloadListener;
 import club.qixqi.uiqq.tasks.DownloadTask;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DownloadService extends Service {
 
     private DownloadTask downloadTask;
     private String downloadUrl;
+    private FileTransferDao fileTransferDao = null;
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    // private Callback callback;
+
+
+    /**
+     * 自定义接口
+     */
+    /* public interface Callback{
+        public void uploadDownloaded();
+    }*/
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        fileTransferDao = new FileTransferDao(DownloadService.this);
+    }
+
+
 
     private DownloadListener listener = new DownloadListener() {
         @Override
@@ -35,12 +60,17 @@ public class DownloadService extends Service {
         }
 
         @Override
-        public void onSuccess() {
+        public void onSuccess(int linkId) {
             downloadTask = null;
             // 下载成功后将前台服务通知关闭，并创建一个新的下载成功的通知
             stopForeground(true);
             getNotificationManager().notify(1, getNotification("Download Success", -1));    // -1不显示进度
             Toast.makeText(DownloadService.this, "Download Success", Toast.LENGTH_SHORT).show();
+            fileTransferDao.editStatus(linkId, 0, 'h');
+            fileTransferDao.editFinishTime(linkId, 0, df.format(new Date()));
+            // callback.uploadDownloaded();
+            // Log.d("hello", linkId + "");
+            // Log.d("hello" ,  Boolean.toString(fileTransferDao.isContain(linkId)));
         }
 
         @Override

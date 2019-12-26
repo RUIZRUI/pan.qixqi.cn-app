@@ -30,6 +30,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
     public String nickName;
 
     private User selfUser = SharedPreferenceUtil.getLoginUser(MyApplication.getContext());
+    private int linkId;
 
     private DownloadListener listener;
 
@@ -48,7 +49,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
     protected void onPostExecute(Integer status) {
         switch (status){
             case TYPE_SUCCESS:
-                listener.onSuccess();
+                listener.onSuccess(linkId);
                 break;
             case TYPE_FAILED:
                 listener.onFailed();
@@ -81,6 +82,9 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
             long downloadedLength = 0;      // 已经下载长度
             String downloadUrl = strings[0];
             String linkIdStr = strings[1];
+            linkId = Integer.parseInt(linkIdStr);
+            Log.d("hello", "linkIdStr = " + linkIdStr);
+            Log.d("hello", "linkId = " + linkId);
 //            String fileName  = downloadUrl.substring(downloadUrl.lastIndexOf("/"));
             // String fileName = "/test";
             // String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();

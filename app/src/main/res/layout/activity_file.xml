@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/wechat_bg"
+    android:background="@color/white"
     tools:context=".FileActivity">
 
 
@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <!-- 第一个子控件 -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -25,25 +25,91 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+            <LinearLayout
+                android:id="@+id/layout_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="20dp"
+                android:layout_below="@id/toolbar"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6">
+
+                    <EditText
+                        android:id="@+id/input_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="40dp"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:background="@drawable/search_shape"
+                        android:hint="输入分享链接" />
+
+
+
+
+                    <ImageView
+                        android:id="@+id/share_clean"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="10dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignRight="@id/input_content"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/share_clean" />
+
+
+
+
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/share_search"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:src="@drawable/share_search" />
+
+
+
+            </LinearLayout>
+
 
             <!-- 下拉刷新 -->
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_refresh"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_below="@id/layout_search"
+                android:layout_above="@id/bnav_menu"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <!-- 文件列表 -->
-                <ListView
-                    android:id="@+id/list_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="@color/wechat_grey"
-                    android:dividerHeight="0.5px" />
+
+
+                    <!-- 文件列表 -->
+                    <ListView
+                        android:id="@+id/list_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@drawable/file_divider" />
+
+
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -53,6 +119,7 @@
                 android:id="@+id/bnav_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="center"
                 app:itemBackground="@color/white"
                 app:itemIconTint="@drawable/main_bottom"
@@ -60,7 +127,37 @@
                 app:menu="@menu/bottom_navigation_view"
                 app:labelVisibilityMode="labeled" />
 
-        </LinearLayout>
+
+            <!-- 底部导航栏，文件选中时显示 -->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bnav_file_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                app:itemBackground="?attr/colorPrimary"
+                app:itemIconTint="@drawable/file_bottom"
+                app:itemTextColor="@drawable/file_bottom"
+                app:menu="@menu/bottom_navigation_file_view"
+                app:labelVisibilityMode="labeled" />
+
+
+            <!-- 顶部导航栏，文件选中时显示 -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/nav_file_menu"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:visibility="gone"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+
+        </RelativeLayout>
 
         <!-- 第二个子控件 -->
         <com.google.android.material.navigation.NavigationView

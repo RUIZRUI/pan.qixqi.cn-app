@@ -16,6 +16,10 @@ public class FileLink implements Serializable {
     private char isRoot;
     private int parent;
     private String createLinkTime;
+    private String downloadFinishTime;          // 下载完成时间
+    private String uploadFinishTime;            // 上传完成时间
+    private char downloadStatus;        // 下载状态（i下载中/h下载完成/u未知）
+    private char uploadStatus;          // 上传状态（i上传中/h上传完成/u未知)
 
     public FileLink(){
 
@@ -35,6 +39,45 @@ public class FileLink implements Serializable {
         this.isRoot = isRoot;
         this.parent = parent;
         this.createLinkTime = createLinkTime;
+    }
+
+
+    /**
+     * 保存到本地，记录下载上传
+     * @param linkId
+     * @param userId
+     * @param fileId
+     * @param fileName
+     * @param fileType
+     * @param fileSize
+     * @param isFolder
+     * @param folderName
+     * @param fileList
+     * @param folderList
+     * @param isRoot
+     * @param parent
+     * @param downloadFinishTime
+     * @param uploadFinishTime
+     * @param downloadStatus
+     * @param uploadStatus
+     */
+    public FileLink(int linkId, int userId, int fileId, String fileName, String fileType, long fileSize, char isFolder, String folderName, String fileList, String folderList, char isRoot, int parent, String downloadFinishTime, String uploadFinishTime, char downloadStatus, char uploadStatus) {
+        this.linkId = linkId;
+        this.userId = userId;
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.fileSize = fileSize;
+        this.isFolder = isFolder;
+        this.folderName = folderName;
+        this.fileList = fileList;
+        this.folderList = folderList;
+        this.isRoot = isRoot;
+        this.parent = parent;
+        this.downloadFinishTime = downloadFinishTime;
+        this.uploadFinishTime = uploadFinishTime;
+        this.downloadStatus = downloadStatus;
+        this.uploadStatus = uploadStatus;
     }
 
     public int getLinkId() {
@@ -141,6 +184,37 @@ public class FileLink implements Serializable {
         this.createLinkTime = createLinkTime;
     }
 
+    public String getDownloadFinishTime() {
+        return downloadFinishTime;
+    }
+
+    public void setDownloadFinishTime(String downloadFinishTime) {
+        this.downloadFinishTime = downloadFinishTime;
+    }
+
+    public String getUploadFinishTime() {
+        return uploadFinishTime;
+    }
+
+    public void setUploadFinishTime(String uploadFinishTime) {
+        this.uploadFinishTime = uploadFinishTime;
+    }
+
+    public char getDownloadStatus() {
+        return downloadStatus;
+    }
+
+    public void setDownloadStatus(char downloadStatus) {
+        this.downloadStatus = downloadStatus;
+    }
+
+    public char getUploadStatus() {
+        return uploadStatus;
+    }
+
+    public void setUploadStatus(char uploadStatus) {
+        this.uploadStatus = uploadStatus;
+    }
 
     @Override
     public String toString() {

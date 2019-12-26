@@ -15,24 +15,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import club.qixqi.uiqq.adapter.FileDownloadedAdapter;
+import club.qixqi.uiqq.adapter.FileDownloadingAdapter;
+import club.qixqi.uiqq.bean.FileLink;
 import club.qixqi.uiqq.bean.User;
+import club.qixqi.uiqq.dao.FileTransferDao;
 import club.qixqi.uiqq.services.DownloadService;
 import club.qixqi.uiqq.util.SharedPreferenceUtil;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 /**
@@ -41,7 +44,8 @@ import okhttp3.Response;
  */
 
 
-public class FileDownloadActivity extends AppCompatActivity implements View.OnClickListener{
+public class FileDownloadActivity extends AppCompatActivity implements View.OnClickListener,
+    FileDownloadingAdapter.Callback, FileDownloadedAdapter.Callback{
 
     private DownloadService.DownloadBinder downloadBinder;
 
@@ -49,6 +53,7 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             downloadBinder = (DownloadService.DownloadBinder) service;
+            setFileLink();      // 获取fileLink
         }
 
         @Override
@@ -60,6 +65,34 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
 
 
     private User selfUser;
+    private FileLink fileLink;
+    // private FileTransferDao fileTransferDao = new FileTransferDao(FileDownloadActivity.this);    // 报错，我觉得是尚未创建，context空指针异常
+    private FileTransferDao fileTransferDao;
+
+    private ListView listViewDownloading;
+    private List<FileLink> fileDownloadingList = new ArrayList<>();
+    private FileDownloadingAdapter downloadingAdapter;
+
+    private ListView listViewDownloaded;
+    private List<FileLink> fileDownloadedList = new ArrayList<>();
+    private FileDownloadedAdapter downloadedAdapter;
+
+    private ListView listViewUploading;
+    private List<FileLink> fileUploadingList = new ArrayList<>();
+    private FileDownloadingAdapter uploadingAdapter;
+
+    private ListView listViewUploaded;
+    private List<FileLink> fileUploadedList = new ArrayList<>();
+    private FileDownloadedAdapter uploadedAdapter;
+
+    private boolean isDownload = true;  // (true)下载列表 or 上传列表(false)
+
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private LinearLayout layout_file_downloading;
+    private LinearLayout layout_file_downloaded;
+    private LinearLayout layout_file_uploaded;
+
 
 
     @Override
@@ -70,10 +103,19 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
         // 获取当前登录用户
         selfUser = SharedPreferenceUtil.getLoginUser(FileDownloadActivity.this);
 
+        fileTransferDao = new FileTransferDao(this);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
         changeHomeAsUp(actionBar);
+
+        TextView downloadView = (TextView) findViewById(R.id.download_view);
+        TextView uploadView = (TextView) findViewById(R.id.upload_view);
+        downloadView.setOnClickListener(this);
+        uploadView.setOnClickListener(this);
 
         // 开启DownloadService
         Intent intent = new Intent(this, DownloadService.class);
@@ -85,9 +127,79 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
             ActivityCompat.requestPermissions(FileDownloadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-        Button test = (Button) findViewById(R.id.test);
-        test.setOnClickListener(this);
+        layout_file_downloading = (LinearLayout) findViewById(R.id.layout_file_downloading);
+        layout_file_downloaded = (LinearLayout) findViewById(R.id.layout_file_downloaded);
+        layout_file_uploaded = (LinearLayout) findViewById(R.id.layout_file_uploaded);
+
+
+        // 文件下载进行中
+        initFileDownloadingList();
+        listViewDownloading = (ListView) findViewById(R.id.downloading_list_view);
+        downloadingAdapter = new FileDownloadingAdapter(FileDownloadActivity.this, fileDownloadingList, FileDownloadActivity.this);
+        listViewDownloading.setAdapter(downloadingAdapter);
+
+        // 文件下载完成
+        initFileDownloadedList();
+        listViewDownloaded = (ListView) findViewById(R.id.downloaded_list_view);
+        downloadedAdapter = new FileDownloadedAdapter(FileDownloadActivity.this, fileDownloadedList, FileDownloadActivity.this);
+        listViewDownloaded.setAdapter(downloadedAdapter);
+
+        // 文件上传进行中
+        // initFileUploadingList();
+        // listViewUploading = (ListView) findViewById(R.id.uploading_list_view);
+        // uploadingAdapter = new FileDownloadingAdapter(FileDownloadActivity.this, fileUploadingList, FileDownloadActivity.this);
+        // listViewUploading.setAdapter(uploadingAdapter);
+
+        // 文件上传完成
+        initFileUploadedList();
+        listViewUploaded = (ListView) findViewById(R.id.uploaded_list_view);
+        uploadedAdapter = new FileDownloadedAdapter(FileDownloadActivity.this, fileUploadedList, FileDownloadActivity.this);
+        listViewUploaded.setAdapter(uploadedAdapter);
     }
+
+
+    private void initFileDownloadingList(){
+        fileDownloadingList = fileTransferDao.getFileTransfer(selfUser.getUserId(), 0, 'i');
+    }
+
+    private void initFileDownloadedList(){
+        fileDownloadedList = fileTransferDao.getFileTransfer(selfUser.getUserId(), 0, 'h');
+    }
+
+    private void initFileUploadingList(){
+        fileUploadingList = fileTransferDao.getFileTransfer(selfUser.getUserId(), 1, 'i');
+    }
+
+    private void initFileUploadedList(){
+        fileUploadedList = fileTransferDao.getFileTransfer(selfUser.getUserId(), 1, 'h');
+    }
+
+
+    /**
+     * 从FileActivity获取fileLink
+     */
+    private void setFileLink(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle!=null && bundle.containsKey("fileLink")){         // 选中文件，点击下载时有效
+            fileLink = (FileLink)bundle.getSerializable("fileLink");
+            Log.d("FileDownloadActivity1", fileLink.toString());
+            String url = "https://www.ourvultr.club:8443/qq/FileDownload";
+            String linkIdStr = Integer.toString(fileLink.getLinkId());
+            downloadBinder.startDownload(url, linkIdStr);
+            // fileLink.setDownloadStatus('i');
+            // fileTransferDao.add(fileLink);
+            if(fileTransferDao.isContain(fileLink.getLinkId())){    // 更新
+                fileTransferDao.editStatus(fileLink.getLinkId(), 0, 'i');
+            } else{     // 添加
+                fileLink.setDownloadStatus('i');
+                fileTransferDao.add(fileLink);
+            }
+            initFileDownloadingList();
+            downloadingAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,57 +211,32 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.test:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-
-                            // String url = "https://www.ourvultr.club:8443/qq/upload/files/0a7aaa28bde6d2c067ce18bebd6774bc.mp4";
-                            String url = "https://www.ourvultr.club:8443/qq/FileDownload";
-                            OkHttpClient client = new OkHttpClient();
-                            RequestBody requestBody = new FormBody.Builder()
-                                    .add("method", "getSize")
-                                    .add("userId", Integer.toString(801935))
-                                    .add("password", selfUser.getPassword())
-                                    .add("linkId", Integer.toString(9202582))
-                                    .build();
-                            Request request = new Request.Builder()
-                                    .url(url)
-                                    .post(requestBody)
-                                    .build();
-                            Response response = client.newCall(request).execute();
-                            if (response != null && response.isSuccessful()) {
-                                long contentLength = response.body().contentLength();
-                                long length = Long.parseLong(response.body().string().trim());  // 去除最后一个换行符号
-                                // String length = response.body().string();
-                                response.body().close();
-                                // return contentLength;
-                                Log.e("FileDownload1", Long.toString(length));
-                                Log.e("FileDownload1", Long.toString(contentLength));
-                                // Toast.makeText(this, Long.toString(contentLength), Toast.LENGTH_SHORT).show();
-                            }
-                            // return 0;
-                            // Toast.makeText(this, "0", Toast.LENGTH_SHORT).show();
-                            Log.e("FileDownload1", "0");
-                        } catch (IOException e){
-                            // Log.e("FileDownload", e.getMessage());
-                            e.printStackTrace();
-                            Log.e("FileDownload1", "nihao");
-                            if(e.getMessage()==null){
-                                Log.e("FileDownload1", "o");
-                            }
-                            // Toast.makeText(this, "exception", Toast.LENGTH_SHORT).show();
-                            Log.e("FileDownload1", "exception");
-                        }
-
-                    }
-                }).start();
-
-
+            case R.id.download_view:
+                // Toast.makeText(FileDownloadActivity.this, "下载列表开发中...", Toast.LENGTH_SHORT).show();
+                if(!isDownload){
+                    layout_file_downloading.setVisibility(View.VISIBLE);
+                    layout_file_downloaded.setVisibility(View.VISIBLE);
+                    layout_file_uploaded.setVisibility(View.GONE);
+                    isDownload = true;
+                }
+                break;
+            case R.id.upload_view:
+                // Toast.makeText(FileDownloadActivity.this, "上传列表开发中...", Toast.LENGTH_SHORT).show();
+                if(isDownload){
+                    layout_file_downloading.setVisibility(View.GONE);
+                    layout_file_downloaded.setVisibility(View.GONE);
+                    layout_file_uploaded.setVisibility(View.VISIBLE);
+                    isDownload = false;
+                }
                 break;
             default:
         }
+    }
+
+
+    @Override
+    public void click(View v) {
+
     }
 
     /**
@@ -165,9 +252,10 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.nav_more:
                 // String url = "https://www.ourvultr.club:8443/qq/upload/files/0a7aaa28bde6d2c067ce18bebd6774bc.mp4";
-                String url = "https://www.ourvultr.club:8443/qq/FileDownload";
-                String linkIdStr = Integer.toString(9202582);
-                downloadBinder.startDownload(url, linkIdStr);
+                // String url = "https://www.ourvultr.club:8443/qq/FileDownload";
+                // String linkIdStr = Integer.toString(4235862);
+                // downloadBinder.startDownload(url, linkIdStr);
+                Toast.makeText(FileDownloadActivity.this, "更多", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
