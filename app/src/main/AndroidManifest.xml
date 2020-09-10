@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="club.qixqi.uiqq">
+    package="cn.qixqi.pan">
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 访问存储权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,47 +15,47 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".context.MyApplication"
+        android:name="cn.qixqi.cn.qixqi.pan.context.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name="cn.qixqi.cn.qixqi.pan.LocationActivity"></activity>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="3HIH4twmfUSIEX1xIwIbytEf3BWnDBIa" />
 
-        <activity android:name=".FileUserShareActivity" />
-        <activity android:name=".FileDownloadActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FileUserShareActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FileDownloadActivity" />
 
         <service
-            android:name=".services.DownloadService"
+            android:name="cn.qixqi.cn.qixqi.pan.services.DownloadService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".FileUploadActivity" />
-        <activity android:name=".login" />
-        <activity android:name=".SessionActivity" />
-        <activity android:name=".AddFriendActivity" />
-        <activity android:name=".FriendMoreMessageActivity" />
-        <activity android:name=".FriendHomeActivity" />
-        <activity android:name=".FriendsActivity" />
-        <activity android:name=".register" />
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".TikTok" />
-        <activity android:name=".FileActivity">
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FileUploadActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.login" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.SessionActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.AddFriendActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FriendMoreMessageActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FriendHomeActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FriendsActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.register" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.MessageActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.TikTok" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.FileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".success" />
-        <activity android:name=".Search" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.success" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.Search" />
+        <activity android:name="cn.qixqi.cn.qixqi.pan.MainActivity" />
 
         <service
             android:name="com.baidu.location.f"
