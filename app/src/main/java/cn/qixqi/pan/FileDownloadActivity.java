@@ -183,7 +183,7 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
         if(bundle!=null && bundle.containsKey("fileLink")){         // 选中文件，点击下载时有效
             fileLink = (FileLink)bundle.getSerializable("fileLink");
             Log.d("FileDownloadActivity1", fileLink.toString());
-            String url = "https://www.ourvultr.club:8443/qq/FileDownload";
+            String url = this.getString(R.string.domain) + "FileDownload";
             String linkIdStr = Integer.toString(fileLink.getLinkId());
             downloadBinder.startDownload(url, linkIdStr);
             // fileLink.setDownloadStatus('i');
@@ -250,8 +250,8 @@ public class FileDownloadActivity extends AppCompatActivity implements View.OnCl
                 finish();
                 break;
             case R.id.nav_more:
-                // String url = "https://www.ourvultr.club:8443/qq/upload/files/0a7aaa28bde6d2c067ce18bebd6774bc.mp4";
-                // String url = "https://www.ourvultr.club:8443/qq/FileDownload";
+                // String url = this.getString(R.string.domain) + "upload/files/0a7aaa28bde6d2c067ce18bebd6774bc.mp4";
+                // String url = this.getString(R.string.domain) + "FileDownload";
                 // String linkIdStr = Integer.toString(4235862);
                 // downloadBinder.startDownload(url, linkIdStr);
                 Toast.makeText(FileDownloadActivity.this, "更多", Toast.LENGTH_SHORT).show();

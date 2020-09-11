@@ -33,6 +33,7 @@ import java.util.List;
 import cn.qixqi.pan.adapter.SessionAdapter;
 import cn.qixqi.pan.bean.Sessions;
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -227,7 +228,7 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String address = "https://www.ourvultr.club:8443/qq/SessionServlet?method=searchAll&userId=" + selfUser.getUserId();
+                String address = MyApplication.getContext().getString(R.string.domain) + "SessionServlet?method=searchAll&userId=" + selfUser.getUserId();
                 HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -262,7 +263,7 @@ public class MessageActivity extends AppCompatActivity implements BottomNavigati
                         List<Sessions> list = JSON.parseArray(reponse, Sessions.class);
                         for(Sessions sessions : list){
                             sessionsList.add(sessions);
-                            Log.d("qixqi.club", sessions.toString());
+                            Log.d(MyApplication.getContext().getString(R.string.domain), sessions.toString());
                         }
                         // Toast.makeText(MessageActivity.this, reponse, Toast.LENGTH_SHORT).show();
                     }

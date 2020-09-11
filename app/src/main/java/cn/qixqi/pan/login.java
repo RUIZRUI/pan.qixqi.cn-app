@@ -29,6 +29,7 @@ import java.net.URL;
 
 import cn.qixqi.pan.bean.FileLink;
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -137,7 +138,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 BufferedReader reader = null;
                 DataOutputStream out = null;
                 try{
-                    URL url = new URL("https://www.ourvultr.club:8443/qq/Login");
+                    URL url = new URL(MyApplication.getContext().getString(R.string.domain) + "Login");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setConnectTimeout(8 * 1000);
@@ -188,7 +189,7 @@ public class login extends AppCompatActivity implements View.OnClickListener {
      * @param userId
      */
     private void getRootFolder(int userId){
-        String address = "https://www.ourvultr.club:8443/qq/FileSearch";
+        String address = this.getString(R.string.domain) + "FileSearch";
         final RequestBody requestBody = new FormBody.Builder()
                 .add("method", "getRootFolder")
                 .add("userId", Integer.toString(userId))

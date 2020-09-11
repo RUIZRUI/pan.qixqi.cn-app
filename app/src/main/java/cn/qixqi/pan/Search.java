@@ -196,7 +196,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     @Override
     public boolean onQueryTextSubmit(final String query) {
         // todo 需要设置搜索框只能输入数字
-        String address = "https://www.ourvultr.club:8443/qq/Users?method=strangerSearch&content=" + query;
+        String address = this.getString(R.string.domain) + "Users?method=strangerSearch&content=" + query;
         HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

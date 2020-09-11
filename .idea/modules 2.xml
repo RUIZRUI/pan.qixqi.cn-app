@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UIqq.iml" filepath="$PROJECT_DIR$/UIqq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pan.iml" filepath="$PROJECT_DIR$/pan.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

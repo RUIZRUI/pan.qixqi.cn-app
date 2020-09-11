@@ -257,7 +257,7 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
      * @param folderName
      */
     private void createNewFolder(final AlertDialog alert, String folderName){
-        String address = "https://www.ourvultr.club:8443/qq/Folders";
+        String address = this.getString(R.string.domain) + "Folders";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "create")
                 .add("userId", Integer.toString(selfUser.getUserId()))
@@ -299,7 +299,7 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
         // }
 
 
-        String address = "https://www.ourvultr.club:8443/qq/FileUpload";
+        String address = this.getString(R.string.domain) + "FileUpload";
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("userId", Integer.toString(selfUser.getUserId()))

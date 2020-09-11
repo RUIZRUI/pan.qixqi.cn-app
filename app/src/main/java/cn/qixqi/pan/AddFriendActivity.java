@@ -128,7 +128,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
      */
     // 访问服务器，添加好友
     private void addFriend(int userId1, int userId2){
-        String address = "https://www.ourvultr.club:8443/qq/Friends";
+        String address = this.getString(R.string.domain) + "Friends";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "add")
                 .add("userId1", Integer.toString(userId1))
@@ -164,7 +164,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
      * @param userId2       接受人id
      */
     private void addSession(int userId1, String username1, int userId2){
-        String address = "https://www.ourvultr.club:8443/qq/SessionServlet";
+        String address = this.getString(R.string.domain) + "SessionServlet";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "create")
                 .add("userId1", Integer.toString(userId1))

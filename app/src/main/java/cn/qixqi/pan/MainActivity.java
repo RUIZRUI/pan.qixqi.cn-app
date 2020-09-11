@@ -21,6 +21,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 
+import cn.qixqi.pan.context.MyApplication;
+
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener {
 
     private Spinner spinner1;
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     }else if(sex.getCheckedRadioButtonId() == R.id.female_radio){
                         sexValue = "f";
                     }
-                    URL url = new URL("https://www.qixqi.club:8443");
+                    URL url = new URL(MyApplication.getContext().getString(R.string.domain));
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setConnectTimeout(8000);

@@ -32,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 
 import cn.qixqi.pan.adapter.UserAdapter;
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -237,7 +238,7 @@ public class FriendsActivity extends AppCompatActivity implements BottomNavigati
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpUtil.sendOkHttpRequest("https://ourvultr.club:8443/qq/Friends?method=searchAll&userId1=" + selfUser.getUserId(), new okhttp3.Callback(){
+                HttpUtil.sendOkHttpRequest(MyApplication.getContext().getString(R.string.domain) + "Friends?method=searchAll&userId1=" + selfUser.getUserId(), new okhttp3.Callback(){
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
                         showResponse("error" + e.getMessage(), false);

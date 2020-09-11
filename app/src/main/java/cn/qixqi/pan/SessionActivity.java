@@ -37,6 +37,7 @@ import cn.qixqi.pan.adapter.MessageAdapter;
 import cn.qixqi.pan.bean.Message;
 import cn.qixqi.pan.bean.Sessions;
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SessionsUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
@@ -119,7 +120,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
         listView.setAdapter(adapter);
 
         // 建立 WebSocket 连接
-        String address = "wss://ourvultr.club:8443/qq/MessageSocket/" + selfUser.getUserId();
+        String address = this.getString(R.string.websocketDomain) + "MessageSocket/" + selfUser.getUserId();
         EchoWebSocketListener socketListener = new EchoWebSocketListener();
         HttpUtil.sendOkHttpRequestWithWebSocket(address, socketListener);
     }
@@ -174,7 +175,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
      */
     @Override
     public void onRefresh() {
-        /* String address = "https://www.ourvultr.club:8443/qq/Messages?method=searchAll&userId1=" + sessions.getUserId1() + "&userId2=" + sessions.getUserId2();
+        /* String address = MyApplication.getContext().getString(R.string.domain) + "Messages?method=searchAll&userId1=" + sessions.getUserId1() + "&userId2=" + sessions.getUserId2();
         HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -270,7 +271,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
         if(message == null){
             return;
         }
-        /* String address = "https://www.ourvultr.club:8443/qq/Messages";
+        /* String address = MyApplication.getContext().getString(R.string.domain) + "Messages";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "add")
                 .add("message", JSON.toJSONString(message))
@@ -301,7 +302,7 @@ public class SessionActivity extends AppCompatActivity implements View.OnClickLi
             public void run() {
                 switch (source){
                     case SEARCHALL:
-                        // Log.d("qixqi.club", response);
+                        // Log.d(MyApplication.getContext().getString(R.string.domain), response);
                         if("error".equals(response) || "empty".equals(response)){       // 注意这里不是okhttp3响应数据，所以不能加\n
                             Toast.makeText(SessionActivity.this, "对方可能已经下线了", Toast.LENGTH_SHORT).show();
                         }else{

@@ -5,4 +5,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="dbVersion">13</string>
+    <string name="domain">https://qixqi.cn:8443/pan/</string>
+    <string name="websocketDomain">wss://qixqi.cn:8443/pan/</string>
 </resources>

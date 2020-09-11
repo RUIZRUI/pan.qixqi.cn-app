@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import com.alibaba.fastjson.JSONObject;
 import cn.qixqi.pan.adapter.FileLinkAdapter;
 import cn.qixqi.pan.bean.FileLink;
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -192,7 +194,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
                     HttpUtil.sendOkHttpRequest(address, new okhttp3.Callback(){
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                            Log.e("qixqi.club", "FileActivity.java: " + e.getMessage());
+                            Log.e(MyApplication.getContext().getString(R.string.domain), "FileActivity.java: " + e.getMessage());
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("error", e.getMessage());
                             responseSearchShare(jsonObject);
@@ -212,11 +214,11 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
                                 String responseStr = response.body().string().trim();
                                 jsonObject = JSON.parseObject(responseStr);
                                 responseSearchShare(jsonObject);
-                                Log.d("qixqi.club", responseStr);
+                                Log.d(MyApplication.getContext().getString(R.string.domain), responseStr);
                             } catch (Exception e){
                                 jsonObject = new JSONObject();
                                 jsonObject.put("error", "后台返回异常信息");
-                                Log.e("qixqi.club", e.getMessage());
+                                Log.e(MyApplication.getContext().getString(R.string.domain), e.getMessage());
                                 responseSearchShare(jsonObject);
                             }
                         }
@@ -270,7 +272,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
                         @Override
                         public void onClick(View v) {
                             // getShare()
-                            // Log.d("qixqi.club", shareFileLink.toString());
+                            // Log.d(MyApplication.getContext().getString(R.string.domain), shareFileLink.toString());
                             getShare(shareFileLink.getLinkId());
                             alert.dismiss();
                         }
@@ -292,7 +294,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
      * @param linkId
      */
     private void getShare(int linkId){
-        String address = "https://www.ourvultr.club:8443/qq/FileShare";
+        String address = this.getString(R.string.domain) + "FileShare";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "getShare")
                 .add("linkId", Integer.toString(linkId))
@@ -611,7 +613,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
 
 
     private void setFileNewName(int linkId, String newName){
-        String url = "https://www.ourvultr.club:8443/qq/Folders";
+        String url = this.getString(R.string.domain) + "Folders";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "rename")
                 .add("linkId", Integer.toString(linkId))
@@ -649,7 +651,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void createFileShare(int linkId){
-        String url = "https://www.ourvultr.club:8443/qq/FileShare";
+        String url = this.getString(R.string.domain) + "FileShare";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "create")
                 .add("linkId", Integer.toString(linkId))
@@ -690,7 +692,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
      * 获取当前目录下某一文件夹的文件列表
      */
     private void getFileLinks(int linkId){
-        String address = "https://www.ourvultr.club:8443/qq/FileSearch";
+        String address = this.getString(R.string.domain) + "FileSearch";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "searchFolder")
                 .add("linkId", Integer.toString(linkId))
@@ -725,7 +727,7 @@ public class FileActivity extends AppCompatActivity implements BottomNavigationV
      * 转移到登录时调用
      */
     /* private void getRootFolder(int userId){
-        String address = "https://www.ourvultr.club:8443/qq/FileSearch";
+        String address = this.getString(R.string.domain) + "FileSearch";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "getRootFolder")
                 .add("userId", Integer.toString(userId))

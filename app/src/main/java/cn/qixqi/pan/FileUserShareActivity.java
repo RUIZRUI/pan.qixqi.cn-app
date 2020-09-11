@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.HttpUtil;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 import okhttp3.Call;
@@ -66,7 +67,7 @@ public class FileUserShareActivity extends AppCompatActivity implements ListView
 
 
     private void initShareList(){
-        String url = "https://www.ourvultr.club:8443/qq/FileShare";
+        String url = this.getString(R.string.domain) + "FileShare";
         RequestBody requestBody = new FormBody.Builder()
                 .add("method", "searchAll")
                 .add("userId", Integer.toString(selfUser.getUserId()))
@@ -74,14 +75,14 @@ public class FileUserShareActivity extends AppCompatActivity implements ListView
         HttpUtil.sendOkHttpRequest(url, requestBody, new okhttp3.Callback(){
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e("qixqi.club", "FileUserShareActivity: " + e.getMessage());
+                Log.e(MyApplication.getContext().getString(R.string.domain), "FileUserShareActivity: " + e.getMessage());
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String responseStr = response.body().string();
                 responseWithUI(responseStr);
-                Log.d("qixqi.club", "FileUserShareActivity: " + responseStr);
+                Log.d(MyApplication.getContext().getString(R.string.domain), "FileUserShareActivity: " + responseStr);
             }
         });
     }

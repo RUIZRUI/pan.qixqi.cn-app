@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import cn.qixqi.pan.bean.User;
+import cn.qixqi.pan.context.MyApplication;
 import cn.qixqi.pan.util.SharedPreferenceUtil;
 
 public class register extends AppCompatActivity implements OnClickListener, OnCheckedChangeListener {
@@ -127,7 +128,7 @@ public class register extends AppCompatActivity implements OnClickListener, OnCh
                     }else if(sex.getCheckedRadioButtonId() == R.id.female_radio){
                         sexValue = "f";
                     }
-                    URL url = new URL("https://www.ourvultr.club:8443/qq/Register");
+                    URL url = new URL(MyApplication.getContext().getString(R.string.domain) + "Register");
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     connection.setConnectTimeout(8 * 000);
