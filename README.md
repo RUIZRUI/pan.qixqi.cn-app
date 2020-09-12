@@ -2,6 +2,7 @@
 
 1. 如何设置SearchView的宽度
 2. 升级到 android10 后，文件存储机制改为沙盒模式，解决方法：[csdn](https://blog.csdn.net/Life_s/article/details/108284894)
+3. 软件在android10.0 系统中跳转异常，比如Messages活动跳转到Search活动，不能成功，但在其他系统手机中正常，比如android9等
 
 
 
