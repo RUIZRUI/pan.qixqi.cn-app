@@ -146,7 +146,7 @@ public class FileUploadActivity extends AppCompatActivity implements View.OnClic
             case R.id.upload_picture_text:
                 // Toast.makeText(this, "上传图片", Toast.LENGTH_SHORT).show();
                 if (ContextCompat.checkSelfPermission(FileUploadActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(FileUploadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(FileUploadActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 } else {
                     openAlbum();
                 }

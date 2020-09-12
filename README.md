@@ -1,6 +1,7 @@
 ## Problem
 
 1. 如何设置SearchView的宽度
+2. 升级到 android10 后，文件存储机制改为沙盒模式，解决方法：[csdn](https://blog.csdn.net/Life_s/article/details/108284894)
 
 
 
